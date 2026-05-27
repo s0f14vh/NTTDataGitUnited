@@ -1,3 +1,26 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: #f4f6f9; /* El fondo gris que aislará tu tarjeta */
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: sans-serif;
+}
+
+/* Asegúrate de que el contenedor de tu tarjeta tenga fondo blanco */
+.login-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
 .login-container {
   display: flex;
   justify-content: center;
