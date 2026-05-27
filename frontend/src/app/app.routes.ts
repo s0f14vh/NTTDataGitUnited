@@ -11,6 +11,10 @@ export const routes: Routes = [
     loadComponent: () => import('./login/login').then(m => m.LoginComponent)
   },
   {
+    path: 'compra',
+    loadComponent: () => import('./compra/compra.component').then(m => m.CompraComponent)
+  },
+  {
     path: '**',
     redirectTo: ''
   }
