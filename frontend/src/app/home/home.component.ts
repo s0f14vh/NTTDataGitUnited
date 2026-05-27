@@ -43,41 +43,33 @@ export class HomeComponent implements OnInit {
   }
 
  ngOnInit(): void {
-    // 1. Intentamos conectar con la API de Spring Boot usando el Observable
-    this.ticketService.getEntradas().subscribe({
-      next: (datosDesdeSpring) => {
-        console.log('¡Conectado con el Backend con éxito! Data recibida:', datosDesdeSpring);
+  this.cargarDatosFallback(); // ← Carga datos inmediatamente
 
-        if (datosDesdeSpring && datosDesdeSpring.length > 0) {
-          // Mapeamos los datos reales añadiéndoles la imagen para el carrusel
-          const datosConImagen = datosDesdeSpring.map((ent, index) => ({
-            ...ent,
-            precio: ent.precio || 45.00, // Por si acaso la BBDD solo guardó precioTotal
-            imagen: `https://picsum.photos/800/400?random=${index + 1}`
-          }));
-          this.entradas.set(datosConImagen);
-        } else {
-          // Si la API responde pero la BBDD está vacía, cargamos los datos por defecto
-          this.cargarDatosFallback();
-        }
-      },
-      error: (err) => {
-        console.warn('Backend desconectado o error de CORS. Activando datos locales de reserva...');
-        // 👈 ¡SALVAVIDAS!: Si el backend falla, la web sigue funcionando con estos datos
-        this.cargarDatosFallback();
+  this.ticketService.getEntradas().subscribe({
+    next: (datosDesdeSpring) => {
+      if (datosDesdeSpring && datosDesdeSpring.length > 0) {
+        const datosConImagen = datosDesdeSpring.map((ent, index) => ({
+          ...ent,
+          precio: ent.precio || 45.00,
+          imagen: `https://picsum.photos/800/400?random=${index + 1}`
+        }));
+        this.entradas.set(datosConImagen); // Solo sobreescribe si hay datos reales
       }
-    });
+    },
+    error: (err) => {
+      console.warn('Backend no disponible:', err);
+      // El fallback ya está cargado, no hace falta hacer nada
+    }
+  });
 
-    // Escucha del formulario reactivo para los filtros en tiempo real
-    this.filterForm.valueChanges.subscribe(values => {
-      this.searchQuery.set(values.nombre || '');
-      this.maxPrice.set(values.precioMax ? Number(values.precioMax) : null);
-      this.statusQuery.set(values.disponibilidad || 'todos');
-    });
+  this.filterForm.valueChanges.subscribe(values => {
+    this.searchQuery.set(values.nombre || '');
+    this.maxPrice.set(values.precioMax ? Number(values.precioMax) : null);
+    this.statusQuery.set(values.disponibilidad || 'todos');
+  });
 
-    // Movimiento automático del carrusel
-    setInterval(() => { this.nextSlide(); }, 5000);
-  }
+  setInterval(() => { this.nextSlide(); }, 5000);
+}
 
   // Método auxiliar para no duplicar código de datos locales
   private cargarDatosFallback() {
