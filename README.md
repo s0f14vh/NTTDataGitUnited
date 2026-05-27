@@ -52,4 +52,4 @@ La parte visual compila e inicia correctamente en local. Para levantar la interf
 ```bash
 cd frontend
 npm install
-npm start
+npx ng server
