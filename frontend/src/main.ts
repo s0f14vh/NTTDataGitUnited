@@ -1,6 +1,6 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app'; // Cambiado 'App' por 'AppComponent'
+import { AppComponent } from './app/app'; // 👈 Cambiado de './app/app.component' a './app/app'
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));

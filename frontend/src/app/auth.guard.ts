@@ -1,20 +1,18 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from './auth.service'; // Asegúrate de que la ruta sea correcta
 
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
+  const authService = inject(AuthService); // Inyectamos el servicio moderno
 
-  // Comprobamos si existe el token en el almacenamiento del navegador
-  // (Cuando hagáis el login real, guardaréis el token aquí)
-  const token = localStorage.getItem('token');
-
-  if (token) {
-    // ¡Tiene token! Le dejamos pasar a la ruta
-    return true;
+  // Comprobamos el Signal del servicio para ver si está logueado
+  if (authService.isLoggedInSignal()) {
+    return true; // Tiene permiso, adelante
   } else {
-    // No está logueado: lo redirigimos al login con un aviso
+    // ¡No está logueado! Lo mandamos al login
     console.warn('Acceso denegado. Redirigiendo al login...');
     router.navigate(['/login']);
-    return false;
+    return false; // Bloqueamos el acceso
   }
 };
