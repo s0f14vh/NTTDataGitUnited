@@ -127,3 +127,19 @@ La parte visual compila e inicia correctamente en local. Para levantar la interf
 cd frontend
 npm install
 npx ng serve
+
+
+💡 Lecciones Aprendidas: Gestión del Entorno
+Durante el desarrollo de este proyecto, nos enfrentamos a desafíos técnicos significativos relacionados con la configuración de Maven y las discrepancias de versiones entre el equipo.
+
+Tras analizar los problemas, hemos llegado a una conclusión importante: deberíamos haber mantenido desde el inicio el enfoque utilizado al principio del curso, trabajando con perfiles de trabajo estandarizados y entornos compartidos.
+
+Lo que hemos aprendido:
+
+Consistencia del entorno: Entendimos tarde que compartir la configuración del entorno de desarrollo es tan importante como compartir el código mismo. La falta de esto fue la causa raíz de la mayoría de nuestros problemas con Maven y la compatibilidad entre versiones de Java.
+
+Valor de la estandarización: El uso de herramientas como el Maven Wrapper o perfiles comunes previene este tipo de "errores de entorno" que consumen tiempo valioso de desarrollo.
+
+Autocrítica: Reconocemos que, ante la presión de la entrega, nos desviamos de las buenas prácticas de configuración que aprendimos en las primeras semanas. Este proyecto ha sido un recordatorio necesario de que una base sólida en la configuración inicial es la clave para un desarrollo fluido.
+
+En el futuro, priorizaremos la configuración de entornos compartidos antes de escribir la primera línea de código, garantizando que todos los miembros del equipo trabajemos bajo las mismas condiciones.
