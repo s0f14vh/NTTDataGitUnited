@@ -20,7 +20,7 @@ export class LoginComponent {
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
-
+  /*
   onLogin() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
@@ -37,6 +37,30 @@ export class LoginComponent {
       }
     } else {
       this.errorSignal.set('Credenciales inválidas o incompletas');
+    }
+  }
+*/
+
+    // modificaciones  ---- ver si funciona 
+  // Tienen que importar HttpClient y hacer la llamada así:
+  
+  onLogin() {
+    if (this.loginForm.valid) {
+      const datosLogin = this.loginForm.value;
+
+      // ESTO ES LO QUE TIENEN QUE AÑADIR ELLOS: Llamada a tu Spring Boot
+      this.http.post('http://localhost:8080/api/usuarios/login', datosLogin).subscribe({
+        next: (respuestaBackend) => {
+          this.errorSignal.set(''); 
+          this.router.navigate(['/tickets']); 
+        },
+        error: (error) => {
+          // Mostrará los mensajes que tú configuraste ("Contraseña incorrecta", etc)
+          this.errorSignal.set(error.error.mensaje || 'Error al iniciar sesión');
+        }
+      });
+    } else {
+      this.errorSignal.set('Debes rellenar todos los campos (mínimo 6 caracteres)');
     }
   }
 }

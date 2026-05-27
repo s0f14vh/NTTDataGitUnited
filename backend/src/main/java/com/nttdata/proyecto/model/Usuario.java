@@ -1,5 +1,5 @@
-package com.nttdata.proyecto.model;
 
+package com.nttdata.proyecto.model;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.ArrayList;
@@ -19,7 +19,8 @@ public class Usuario {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    // AQUÍ ESTÁ EL CAMBIO PARA ARREGLAR EL ERROR:
+    @Column(name = "clave", nullable = false)
     private String password;
 
     // Relación 1:M - Un usuario tiene muchas compras

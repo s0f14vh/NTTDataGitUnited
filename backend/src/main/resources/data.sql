@@ -1,7 +1,6 @@
 -- 1. Insertar Usuarios iniciales de prueba (Entidad Principal)
-INSERT INTO usuarios (nombre, email, password) VALUES ('Ana López', 'ana@email.com', '12345');
-INSERT INTO usuarios (nombre, email, password) VALUES ('Juan Martínez', 'juan@email.com', 'qwerty');
-
+INSERT INTO usuarios (nombre, email, clave) VALUES ('Ana López', 'ana@email.com', '123456');
+INSERT INTO usuarios (nombre, email, clave) VALUES ('Juan Martínez', 'juan@email.com', 'qwerty');
 -- 2. Insertar Compras asociadas (Entidad Hija - Relación 1:M)
 -- Compra 1: Vinculada a Ana (usuario_id = 1)
 INSERT INTO compras (evento, fecha_compra, precio_total, cantidad_entradas, usuario_id) 
