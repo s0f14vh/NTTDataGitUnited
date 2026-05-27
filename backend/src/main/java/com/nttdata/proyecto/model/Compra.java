@@ -1,6 +1,6 @@
 package com.nttdata.proyecto.model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.time.LocalDate;
 
@@ -24,15 +24,13 @@ public class Compra {
     @Column(nullable = false)
     private Integer cantidadEntradas;
 
-    // Muchas compras pertenecen a un único Usuario
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
     @JsonBackReference
     private Usuario usuario;
 
-    // Constructores
     public Compra() {
-        this.fechaCompra = LocalDate.now(); // Asigna la fecha actual automáticamente
+        this.fechaCompra = LocalDate.now();
     }
 
     public Compra(String evento, Double precioTotal, Integer cantidadEntradas, Usuario usuario) {
@@ -43,11 +41,10 @@ public class Compra {
         this.usuario = usuario;
     }
 
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getEvent() { return evento; }
+    public String getEvento() { return evento; }
     public void setEvento(String evento) { this.evento = evento; }
 
     public LocalDate getFechaCompra() { return fechaCompra; }
