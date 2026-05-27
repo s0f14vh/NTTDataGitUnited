@@ -1,0 +1,79 @@
+<header class="navbar">
+  <div class="logo">🎟️ VENTA DE ENTRADAS 2026</div>
+  <nav>
+    <a routerLink="/" class="nav-link active">Inicio</a>
+    <a routerLink="/login" class="login-btn">Acceso Usuario</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="carousel-section">
+    <div class="carousel">
+      @for (entrada of entradas(); track entrada.evento; let idx = $index) {
+        <div class="carousel-item" [class.active]="idx === activeCarouselIndex()">
+          <img [src]="entrada.imagen" [alt]="entrada.evento">
+          <div class="carousel-caption">
+            <h2>{{ entrada.evento }}</h2>
+            <p>Desde {{ entrada.precio }}€ - ¡Reserva ya tus {{ entrada.cantidadEntradas }} entradas!</p>
+          </div>
+        </div>
+      }
+      <button class="carousel-control prev" (click)="prevSlide()">&#10094;</button>
+      <button class="carousel-control next" (click)="nextSlide()">&#10095;</button>
+    </div>
+  </section>
+
+  <section class="search-section">
+    <h3>🔍 Buscador de Eventos</h3>
+    <form [formGroup]="filterForm" class="filter-form">
+      <div class="form-group">
+        <label for="nombre">Nombre del evento</label>
+        <input id="nombre" type="text" formControlName="nombre" placeholder="Ej: Concierto Rock...">
+      </div>
+
+      <div class="form-group">
+        <label for="precioMax">Precio máximo (€)</label>
+        <input id="precioMax" type="number" formControlName="precioMax" placeholder="Ej: 50">
+      </div>
+
+      <div class="form-group">
+        <label for="disponibilidad">Disponibilidad</label>
+        <select id="disponibilidad" formControlName="disponibilidad">
+          <option value="todos">Todos los estados</option>
+          <option value="disponible">Disponible</option>
+          <option value="agotado">Agotado</option>
+        </select>
+      </div>
+    </form>
+  </section>
+
+  <section class="tickets-section">
+    <h3>Cartelera General ({{ entradasFiltradas().length }} encontrados)</h3>
+
+    <div class="tickets-grid">
+      @for (entrada of entradasFiltradas(); track entrada.evento) {
+        <div class="card" [class.agotado]="entrada.disponibilidad === 'agotado'">
+          <div class="card-header">
+            <span class="badge" [class.dispo]="entrada.disponibilidad === 'disponible'">
+              {{ entrada.disponibilidad | uppercase }}
+            </span>
+            <span class="date">{{ entrada.fecha | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="card-body">
+            <h4>{{ entrada.evento }}</h4>
+            <p class="price">Precio por unidad: <strong>{{ entrada.precio }}€</strong></p>
+            <p class="total-info">Pack de {{ entrada.cantidadEntradas }} entradas: {{ entrada.precioTotal }}€</p>
+          </div>
+          <div class="card-footer">
+            <button class="buy-btn" [disabled]="entrada.disponibilidad === 'agotado'">
+              {{ entrada.disponibilidad === 'disponible' ? 'Comprar Entradas' : 'Agotadas' }}
+            </button>
+          </div>
+        </div>
+      } @empty {
+        <p class="no-results">No se han encontrado conciertos o espectáculos que coincidan con los filtros aplicados.</p>
+      }
+    </div>
+  </section>
+</main>
