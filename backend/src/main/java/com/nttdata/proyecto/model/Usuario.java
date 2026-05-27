@@ -1,6 +1,6 @@
-
 package com.nttdata.proyecto.model;
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +19,13 @@ public class Usuario {
     @Column(nullable = false, unique = true)
     private String email;
 
-    // AQUÍ ESTÁ EL CAMBIO PARA ARREGLAR EL ERROR:
     @Column(name = "clave", nullable = false)
     private String password;
 
-    // Relación 1:M - Un usuario tiene muchas compras
-    // JsonManagedReference evita bucles infinitos al serializar a JSON
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Compra> compras = new ArrayList<>();
 
-    // Constructores
     public Usuario() {}
 
     public Usuario(String nombre, String email, String password) {
@@ -38,7 +34,6 @@ public class Usuario {
         this.password = password;
     }
 
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
