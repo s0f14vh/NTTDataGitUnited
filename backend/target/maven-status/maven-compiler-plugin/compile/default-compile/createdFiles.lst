@@ -1,0 +1,7 @@
+com\nttdata\proyecto\repository\UsuarioRepository.class
+com\nttdata\proyecto\controller\CompraController.class
+com\nttdata\proyecto\repository\CompraRepository.class
+com\nttdata\proyecto\controller\UsuarioController.class
+com\nttdata\proyecto\model\Usuario.class
+com\nttdata\proyecto\model\Compra.class
+com\nttdata\proyecto\ProyectoApplication.class
