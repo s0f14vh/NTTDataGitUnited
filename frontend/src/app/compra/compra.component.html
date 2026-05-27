@@ -1,0 +1,179 @@
+<!-- CONFIRMACIÓN DE COMPRA -->
+@if (compraRealizada()) {
+  <div class="success-overlay">
+    <div class="success-card">
+      <div class="success-icon">✅</div>
+      <h2>¡Compra Realizada!</h2>
+      <p>Tus entradas para <strong>{{ entrada()?.evento }}</strong> han sido reservadas.</p>
+      <p class="success-sub">Recibirás un email de confirmación en <strong>{{ compraForm.value.email }}</strong></p>
+      <div class="success-resumen">
+        <span>{{ cantidad() }} entrada{{ cantidad() > 1 ? 's' : '' }}</span>
+        <span class="success-precio">{{ precioTotal }}€</span>
+      </div>
+      <a routerLink="/" class="btn-volver-home">← Volver al inicio</a>
+    </div>
+  </div>
+}
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="logo">🎟️ VENTA DE ENTRADAS 2026</div>
+  <nav>
+    <a routerLink="/" class="nav-link">← Volver</a>
+  </nav>
+</header>
+
+@if (entrada(); as e) {
+<main class="page-grid">
+
+  <!-- COLUMNA IZQUIERDA: Info del evento -->
+  <aside class="info-col">
+
+    <div class="event-hero">
+      <img [src]="e.imagen || 'https://picsum.photos/800/400?random=10'" [alt]="e.evento" class="event-img">
+      <div class="event-hero-overlay">
+        <span class="badge" [class.dispo]="e.disponibilidad === 'disponible'">
+          {{ e.disponibilidad | uppercase }}
+        </span>
+        <h1>{{ e.evento }}</h1>
+        <p class="event-date">📅 {{ e.fecha | date:'dd/MM/yyyy' }}</p>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h3>📋 Sobre el evento</h3>
+      <p class="descripcion">{{ descripcion }}</p>
+    </div>
+
+    <div class="info-section">
+      <h3>📍 Ubicación</h3>
+      @if (venue) {
+        <p class="venue-nombre"><strong>{{ venue.nombre }}</strong></p>
+        <p class="venue-dir">{{ venue.direccion }}</p>
+      }
+      <div class="mapa-wrapper">
+        <iframe
+          [src]="mapaUrl | safeUrl"
+          class="mapa"
+          frameborder="0"
+          scrolling="no"
+          title="Mapa del venue">
+        </iframe>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- COLUMNA DERECHA: Formulario de compra -->
+  <section class="compra-col">
+
+    <div class="precio-card">
+      <div class="precio-header">
+        <span class="precio-label">Precio por entrada</span>
+        <span class="precio-valor">{{ e.precio }}€</span>
+      </div>
+
+      <div class="cantidad-selector">
+        <span class="cantidad-label">Cantidad</span>
+        <div class="cantidad-controls">
+          <button (click)="decrementar()" [disabled]="cantidad() <= 1" class="qty-btn">−</button>
+          <span class="qty-display">{{ cantidad() }}</span>
+          <button (click)="incrementar()" [disabled]="cantidad() >= 10" class="qty-btn">+</button>
+        </div>
+      </div>
+
+      <div class="precio-total">
+        <span>Total</span>
+        <span class="total-valor">{{ precioTotal }}€</span>
+      </div>
+    </div>
+
+    <form [formGroup]="compraForm" class="compra-form" (ngSubmit)="confirmarCompra()">
+
+      <div class="form-section">
+        <h3>👤 Datos del comprador</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre *</label>
+            <input type="text" formControlName="nombre" placeholder="Juan">
+            @if (campoInvalido('nombre')) {
+              <span class="error-msg">Mínimo 3 caracteres</span>
+            }
+          </div>
+          <div class="form-group">
+            <label>Apellidos *</label>
+            <input type="text" formControlName="apellidos" placeholder="García López">
+            @if (campoInvalido('apellidos')) {
+              <span class="error-msg">Campo requerido</span>
+            }
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" formControlName="email" placeholder="juan@email.com">
+            @if (campoInvalido('email')) {
+              <span class="error-msg">Email inválido</span>
+            }
+          </div>
+          <div class="form-group">
+            <label>Teléfono *</label>
+            <input type="tel" formControlName="telefono" placeholder="612345678">
+            @if (campoInvalido('telefono')) {
+              <span class="error-msg">9 dígitos requeridos</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>💳 Datos de pago</h3>
+        <div class="form-group full">
+          <label>Titular de la tarjeta *</label>
+          <input type="text" formControlName="titular" placeholder="JUAN GARCIA LOPEZ">
+          @if (campoInvalido('titular')) {
+            <span class="error-msg">Campo requerido</span>
+          }
+        </div>
+        <div class="form-group full">
+          <label>Número de tarjeta *</label>
+          <input type="text" formControlName="numeroTarjeta" placeholder="1234567890123456" maxlength="16">
+          @if (campoInvalido('numeroTarjeta')) {
+            <span class="error-msg">16 dígitos requeridos</span>
+          }
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Caducidad *</label>
+            <input type="text" formControlName="caducidad" placeholder="MM/AA" maxlength="5">
+            @if (campoInvalido('caducidad')) {
+              <span class="error-msg">Formato MM/AA</span>
+            }
+          </div>
+          <div class="form-group">
+            <label>CVV *</label>
+            <input type="text" formControlName="cvv" placeholder="123" maxlength="4">
+            @if (campoInvalido('cvv')) {
+              <span class="error-msg">3-4 dígitos</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-comprar" [disabled]="cargando() || e.disponibilidad === 'agotado'">
+        @if (cargando()) {
+          <span>Procesando...</span>
+        } @else if (e.disponibilidad === 'agotado') {
+          <span>Entradas Agotadas</span>
+        } @else {
+          <span>🎟️ Confirmar compra — {{ precioTotal }}€</span>
+        }
+      </button>
+
+      <p class="seguridad-txt">🔒 Pago seguro SSL. Tus datos están protegidos.</p>
+
+    </form>
+  </section>
+
+</main>
+}

@@ -1,6 +1,6 @@
 import { Component, signal, computed, OnInit, inject } from '@angular/core'; // Añadido inject
 import { CommonModule, UpperCasePipe, DatePipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TicketService, Entrada } from '../services/ticket.service'; // 👈 Importamos nuestro servicio
 
@@ -14,7 +14,11 @@ import { TicketService, Entrada } from '../services/ticket.service'; // 👈 Imp
 export class HomeComponent implements OnInit {
   private ticketService = inject(TicketService); // 👈 Inyectamos el servicio con Angular 21
   private fb = inject(FormBuilder);
+  private router = inject(Router);
 
+  irACompra(entrada: Entrada) {
+    this.router.navigate(['/compra'], { state: { entrada } });
+  }
   filterForm: FormGroup;
 
   // El signal ahora empieza vacío esperando los datos del servidor

@@ -1,0 +1,224 @@
+:host {
+  display: block;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1e293b;
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.logo { font-weight: bold; font-size: 1.25rem; }
+.nav-link { color: #cbd5e1; text-decoration: none; font-weight: 500; }
+.nav-link:hover { color: white; }
+
+/* LAYOUT GRID */
+.page-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .page-grid { grid-template-columns: 1fr; }
+}
+
+/* COLUMNA INFO */
+.info-col { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.event-hero {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 280px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.event-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
+.event-hero-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+  color: white;
+}
+.event-hero-overlay h1 { margin: 0.5rem 0 0.25rem; font-size: 1.75rem; }
+.event-date { margin: 0; color: #cbd5e1; font-size: 0.9rem; }
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  background: #ef4444;
+  color: white;
+}
+.badge.dispo { background: #10b981; }
+
+.info-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.info-section h3 { margin: 0 0 0.75rem 0; color: #1e293b; font-size: 1rem; }
+.descripcion { color: #475569; line-height: 1.7; margin: 0; }
+.venue-nombre { margin: 0 0 0.25rem; color: #1e293b; }
+.venue-dir { margin: 0 0 1rem; color: #64748b; font-size: 0.9rem; }
+
+.mapa-wrapper { border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; }
+.mapa { width: 100%; height: 220px; display: block; }
+
+/* COLUMNA COMPRA */
+.compra-col { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.precio-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 2px solid #e2e8f0;
+}
+.precio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+.precio-label { color: #64748b; font-size: 0.9rem; }
+.precio-valor { font-size: 1.5rem; font-weight: bold; color: #1e293b; }
+
+.cantidad-selector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.cantidad-label { color: #475569; font-weight: 500; }
+.cantidad-controls { display: flex; align-items: center; gap: 1rem; }
+.qty-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%; border: 2px solid #e2e8f0;
+  background: white; font-size: 1.25rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #1e293b; font-weight: bold;
+  transition: all 0.15s;
+}
+.qty-btn:hover:not(:disabled) { border-color: #3b82f6; color: #3b82f6; }
+.qty-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.qty-display { font-size: 1.25rem; font-weight: bold; color: #1e293b; min-width: 24px; text-align: center; }
+
+.precio-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #1e293b;
+}
+.total-valor { font-size: 1.4rem; color: #10b981; font-weight: bold; }
+
+/* FORMULARIO */
+.compra-form { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.form-section {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.form-section h3 { margin: 0 0 1rem 0; color: #1e293b; font-size: 0.95rem; }
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group.full {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+.form-group label { font-size: 0.8rem; font-weight: 600; color: #64748b; }
+.form-group input {
+  padding: 0.6rem 0.75rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+.form-group input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+.error-msg { font-size: 0.75rem; color: #ef4444; }
+.btn-comprar {
+  width: 100%;
+  padding: 0.9rem;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.btn-comprar:hover:not(:disabled) { background: #059669; transform: translateY(-1px); }
+.btn-comprar:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; transform: none; }
+.seguridad-txt { text-align: center; font-size: 0.8rem; color: #94a3b8; margin: 0; }
+
+/* SUCCESS OVERLAY */
+.success-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+.success-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  text-align: center;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.success-icon { font-size: 4rem; margin-bottom: 1rem; }
+.success-card h2 { color: #1e293b; margin: 0 0 0.5rem; font-size: 1.75rem; }
+.success-card p { color: #475569; margin: 0 0 0.5rem; }
+.success-sub { font-size: 0.9rem; }
+.success-resumen {
+  display: flex; justify-content: space-between;
+  background: #f0fdf4; padding: 1rem; border-radius: 8px;
+  margin: 1.25rem 0; font-weight: 600; color: #1e293b;
+}
+.success-precio { color: #10b981; font-size: 1.2rem; }
+.btn-volver-home {
+  display: inline-block;
+  background: #1e293b; color: white;
+  padding: 0.75rem 2rem; border-radius: 8px;
+  text-decoration: none; font-weight: 600;
+  transition: background 0.2s;
+}
+.btn-volver-home:hover { background: #334155; }

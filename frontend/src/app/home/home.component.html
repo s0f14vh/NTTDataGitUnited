@@ -66,7 +66,9 @@
             <p class="total-info">Pack de {{ entrada.cantidadEntradas }} entradas: {{ entrada.precioTotal }}€</p>
           </div>
           <div class="card-footer">
-            <button class="buy-btn" [disabled]="entrada.disponibilidad === 'agotado'">
+            <button class="buy-btn"
+              [disabled]="entrada.disponibilidad === 'agotado'"
+              (click)="irACompra(entrada)">
               {{ entrada.disponibilidad === 'disponible' ? 'Comprar Entradas' : 'Agotadas' }}
             </button>
           </div>
